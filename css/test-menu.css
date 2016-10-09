@@ -34,7 +34,7 @@ h1 {
   border: 10px double black;
   width: 75%;
   padding: 40px;
-  background-image: url(../img/brick-wall-white-background.jpg);
+
 }
 
 
@@ -79,7 +79,7 @@ ul li span {
 .li-wrap {
   display: flex;
   flex-direction: row;
-  flex-wrap: center;
+
   width: 100%;
   margin: 0 auto;
   overflow: hidden;
@@ -136,12 +136,8 @@ ul li span {
     width: 100%;
     left: 0; top: 0;
     margin: 0;
-    
   }
-  
-  .stations,.hors {
-    margin: 0 auto;
-  }
+
   .li-left {
     font-size: 12px;
   }
