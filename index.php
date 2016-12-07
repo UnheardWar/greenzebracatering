@@ -1,30 +1,9 @@
 <?php
 
-if (empty($_POST) === false) {
-    $errors = array();
-    
-    $name       = $_POST['name'];
-    $email      = $_POST['email'];
-    $message    = $_POST['message'];
-    
-    if (empty($name) === true || empty($email) === true || empty($message) === true) {
-      $errors[] = 'Name, Email, and Message are required!';
-    } else {
-        if (filter_var($email, FILTER_VALIDATE_EMAIL) === false)
-          $errors[] = 'That\'s not a valid email address';
-        if (ctype_alpha($name) === false) {
-           $errors[] = 'Name must only contain letters!';
-        }
-}
+session_start();
 
-
-    if (empty($errors) === true) {
-      
-      mail('', 'Contact form', $message, 'From: ' . $email);
-      header('Location: index.php?sent');
-      exit();
-    }
-}
+$errors = isset($_SESSION['errors']) ? $_SESSION['errors'] : [];
+$fields = isset($_SESSION['fields']) ? $_SESSION['fields'] : [];
 ?>
 
 
@@ -49,47 +28,43 @@ if (empty($_POST) === false) {
   </head>
 
 <body>
-  <article>
-    
-       <?php
-       if (isset($_GET['sent']) === true) {
-         echo '<p>Thanks for contacting us!</p>';
-         } else {
-       
-        if(empty($errors) === false)  {
-            echo '<ul>';
-            foreach($errors as $error) {
-              echo '<li>', $error, '</li>';
-              
-            }
-            echo '</ul>';
-        }
-      ?>
-      
-    <div class="content-wrap">
-      <form action="" method="post">
-        <p>
-          <label for="name">Name</label><br>
-          <input type="text" name="name" id="name" <?php if (isset($_POST['name']) === true) { echo 'value="', strip_tags ($_POST['name']), '"'; }  ?>>
-        </p>
-        <p>
-          <label for="email">Email:</label><br>
-          <input type="text" name="email" id="email" <?php if (isset($_POST['email']) === true) { echo 'value="', strip_tags ($_POST['email']), '"'; }  ?>>
-        </p>
-        <p>
-          <label for="message">Message:</label><br>
-          <textarea name="message" id="message"><?php if (isset($_POST['message']) === true) { echo strip_tags ($_POST['message']), ''; }  ?></textarea>
-        </p>
-          <p>
-            <input type="submit" value="Submit">
-          </p>
-      </form>
-      
-      <?php
-      }
-      ?>
+    <div class="forms-wrap">
+        <?php if(!empty($errors)): ?>
+            <div class="forms">
+                <ul><li><?php echo implode('</li><li>', $errors); ?></li></ul>
+            </div>
+        <?php endif; ?>
+
+        <div class="forms">
+            <form action="contact.php" method="post">
+        </div>
+        <div class="forms">
+            <label>
+                Your Name *
+                <input type="text" name="name" autocomplete="off" <?php echo isset($fields['name']) ? 'value="' . $fields['name'] . '"' : '' ?>>
+            </label>
+        </div>
+        <div class="forms">
+            <label>
+                Your email address *
+                <input type="text" name="email" autocomplete="off" <?php echo isset($fields['email']) ? 'value="' . $fields['email'] . '"' : '' ?>>
+            </label>
+        </div>
+        <div class="forms">
+            <label>
+                Your Message *
+                <textarea name="message" rows="18"></textarea>
+            </label>
+        </div>
+        <div class="forms">
+            <input type="submit" value="Send">
+            <p>* Required field</p>
+        </div>
     </div>
-  </article>
 </body>
 </html>
-    
+
+<?php
+unset($_SESSION['errors']);
+unset($_SESSION['fields']);
+?>
