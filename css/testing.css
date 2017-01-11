@@ -10,7 +10,7 @@ a:visited { color: #388E3C; }
 a:link    { color: #388E3C; }
 
 article     { margin: 30px; box-sizing: border-box; }
-article div { margin-top: 20px; background: #dbdbdb; }
+article div { margin-top: 1px; background: #dbdbdb; }
 article h2  { background-color: #fff; font-family: 'Cinzel', serif; font-size: 8em; text-align: center; }
 
 
@@ -38,7 +38,6 @@ main a:link    { color: #ffffff !important; }
     color: #f2f2f2;
     margin: 0 auto;
 }
-
 
 .button {
     display: inline-block;
